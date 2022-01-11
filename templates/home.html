@@ -1,0 +1,46 @@
+<html>
+    <head>
+        <title>
+            Artificial Inteligence - Dynamic Programming
+        </title>
+    </head>
+    <body>
+        <form action='/play' method='POST'>
+            <label>Episodes</label>
+            <input type='text' name='episodes' value='100'><br>
+
+            <label>Epsilon</label>
+            <input type='text' name='epsilon' value='0.9'><br>
+
+            <label>Gama</label>
+            <input type='text' name='gama' value='0.5'><br>
+
+            <label>Size</label>
+            <input type='text' name='size' value='4'><br>
+
+            <label>Move Cost</label>
+            <input type='text' name='move_cost' value='100'><br>
+
+            <label>Goal Location X</label>
+            <input type='text' name='goal_location_x' value='4'><br>
+
+            <label>Goal Location Y</label>
+            <input type='text' name='goal_location_y' value='4'><br>
+
+            <label>Treasure Location X</label>
+            <input type='text' name='treasure_location_x' value='1'><br>
+
+            <label>Treasure Location Y</label>
+            <input type='text' name='treasure_location_y' value='4'><br>
+
+            <label>Goal Reward</label>
+            <input type='text' name='goal_reward' value='1000'><br>
+
+            <label>Treasure Reward</label>
+            <input type='text' name='treasure_reward' value='10000'><br>
+            
+            <input type='submit' value='send'>
+            
+        </form>
+    </body>
+</html>

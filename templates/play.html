@@ -1,0 +1,124 @@
+<html>
+    <head>
+        <title>
+            Playing Now!
+        </title>
+        <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+    </head>
+
+    <body>
+        <style>
+            body{
+            max-height:100vh;
+            }
+            .wrap{
+            margin:0 auto;
+            margin-top:20px;
+            width:560px;
+            }
+            .square{
+            border: 1px solid white;
+            float:left;
+            background: #99ccff;
+            }
+            .buttons{
+            position:absolute;
+            right:50px;
+            }
+            button{
+            margin:10px;
+            }
+        </style>
+        
+
+        <div class="wrap">
+        </div>
+
+        <div class="results">
+        </div>
+        <script>
+            var response = JSON.parse({{response|tojson|safe}})  
+            var size = response.size
+            var goal_location = response.goal_location
+            var treasure_location = response.treasure_location
+            var array_tracks = response.tracks
+            var shortest_path_percent = response.shortest_path_percent
+            var treasure_percent = response.treasure_percent
+            
+        </script>
+
+    <script>
+        $(document).ready(function() {
+            function newGrid(n) {
+                $(".square").remove();
+                var y
+                var size = 400;
+                var square = size / n;
+                for (var k = n; k > 0; k--) {
+                    for (var i = 0; i < n; i++) {
+                        $(".wrap").append($("<div id=room_"+(i+1).toString()+(k).toString()+"></div>").addClass("square").height(square).width(square));
+                    }
+                $(".wrap").append($("<div></div>").css("clear", "both"));
+                }
+            };
+
+            function Default() {
+                $(".square").hover(function() {
+                $(this).css("background", "white");
+                });
+            };
+
+            function clear() {
+                $(".square").css("background", "#99ccff");
+                $(".square").css("opacity", "1");
+            };
+            
+            function Fade(sq){
+                var op = sq.css('opacity');
+                var newOp = op -0.1;
+                if(newOp > 0){
+                $(sq).css("opacity", newOp);
+                }else{
+                $(sq).css("opacity", "0");
+                }
+            };
+            
+            //Start game
+
+            newGrid(size);
+
+                const sleep = (time) => {
+                    return new Promise((resolve) => setTimeout(resolve, time))
+                }
+
+                const doSomething = async () => {
+                    for (var a=0; a<array_tracks.length;a++) {     
+                        var goal_label = '#room_'+goal_location[0]+goal_location[1]
+                        $(goal_label).css('background', 'green') 
+                        
+                        var treasure_label = '#room_'+treasure_location[0]+treasure_location[1]
+                        $(treasure_label).css('background', 'yellow') 
+
+                        for (var g=0; g<array_tracks[a].length;g++){
+                            var label = '#room_'+array_tracks[a][g][0]+array_tracks[a][g][1]
+                            $(label).css('background', 'black')
+                            await sleep(100)
+
+                            $(label).css('background', 'red')
+                        
+                        }
+                    clear()
+                    }
+
+                $('.results').append('<b>Optimal path percent: </b>' + shortest_path_percent + '%<br>')
+                $('.results').append('<b>Treasure percent: </b>' + treasure_percent + '%<br>')
+                
+                }
+
+                doSomething()
+            
+
+            });
+        </script>
+    </body>
+</html>
